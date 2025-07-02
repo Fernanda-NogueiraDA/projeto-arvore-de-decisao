@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gerador de Árvore de Escalonamento</title>
+  <link rel="stylesheet" href="./src/css/reset.css" />
+  <link rel="stylesheet" href="./src/css/style.css" />
+</head>
+<body>
+    <div class="logos-header">
+    <img src="./src/images/logo moby.png" alt="Logo Moby">
+    <img src="./src/images/logo minalba.png" alt="Logo Minalba">
+    </div>
+
+  <div class="container">
+    <h1>Gerador de Árvore de Decisão</h1>
+    
+    <label>Placa:</label>
+    <input id="placa" type="text" placeholder="Placa">
+
+    <label>Motivo:</label>
+    <select id="motivo">
+      <option value="">Selecione um motivo</option>
+      <option>Parada Não Programada</option>
+      <option>Tempo Excedido no Destino</option>
+      <option>Tempo Excedido na Origem</option>
+      <option>Manutenção Corretiva</option>
+      <option>Manutenção Preventiva</option>
+      <option>Parada Programada</option>
+      <option>DSR</option>
+    </select>
+
+    <label>Origem:</label>
+    <select id="origem">
+      <option value="">Selecione a origem</option>
+      <option>São José dos Campos</option>
+      <option>Campos do Jordão</option>
+    </select>
+
+    <label>Destino:</label>
+    <select id="destino">
+      <option value="">Selecione o destino</option>
+      <option>Rio de Janeiro</option>
+      <option>São José dos Campos</option>
+      <option>Campos do Jordão</option>
+    </select>
+
+    <label>Diagnóstico:</label>
+    <textarea id="diagnostico"></textarea>
+
+    <h3>Acionamentos:</h3>
+    <div id="acionamentos"></div>
+    <button id="addAcionamento">Adicionar Acionamento</button>
+
+    <button id="gerarArvore">Gerar Árvore</button>
+
+    <h3>Árvore Gerada:</h3>
+    <div id="output"></div>
+    <button id="copiarTexto">Copiar Texto</button>
+  </div>
+
+  <script src="./js/script.js"></script>
+</body>
+</html>

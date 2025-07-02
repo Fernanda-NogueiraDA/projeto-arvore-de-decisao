@@ -1,0 +1,90 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #141C52, #428FEC); 
+  min-height: 100vh;
+  padding: 40px;
+  color: #fff;
+  position: relative;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  background: #ffffff;
+  color: #000;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+h1 {
+  text-align: center;
+  color: #141C52;
+  margin-bottom: 20px;
+}
+
+label {
+  margin-top: 10px;
+  font-weight: bold;
+  display: block;
+}
+
+input, select, textarea {
+  display: block;
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+textarea {
+  height: 80px;
+}
+
+button {
+  background: #0693e3; 
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background: #7bdcb5; 
+}
+
+#output {
+  margin-top: 20px;
+  background: #f7f7f7;
+  color: #000;
+  padding: 15px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  text-transform: uppercase;
+}
+
+hr {
+  border: none;
+  border-top: 2px solid #FFC04A; 
+  margin: 20px 0;
+}
+
+.logos-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.logos-header img {
+  height: 80px;         /* Fixa a altura máxima */
+  width: auto;          /* Deixa a largura automática, mantendo proporção */
+  object-fit: contain;  /* Garante que a imagem não estique ou corte */
+  border-radius: 12px;  /* Borda arredondada */
+  background:linear-gradient(135deg, #141C52, #428FEC);     /* Opcional: fundo branco pra destacar o logo */
+  padding: 5px;         /* Opcional: respiro entre imagem e fundo */
+}
