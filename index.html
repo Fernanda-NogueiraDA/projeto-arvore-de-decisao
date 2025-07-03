@@ -15,22 +15,41 @@
   <div class="container">
     <h1>Gerador de Árvore de Decisão</h1>
     
-    <label>Placa:</label>
-    <input id="placa" type="text" placeholder="Placa">
+    <label for="placa">Placa:</label>
+<input id="placa" type="text" list="placas" placeholder="Digite a placa">
 
-    <label>Motivo:</label>
-    <select id="motivo">
-      <option value="">Selecione um motivo</option>
-      <option>Parada Não Programada</option>
-      <option>Tempo Excedido no Destino</option>
-      <option>Tempo Excedido na Origem</option>
-      <option>Manutenção Corretiva</option>
-      <option>Manutenção Preventiva</option>
-      <option>Parada Programada</option>
-      <option>DSR</option>
-    </select>
+  <datalist id="placas">
+  <option value="TDO8H16">
+  <option value="SYU4C93">
+  <option value="TDO8H48">
+  <option value="SYU4C95">
+  <option value="SYU4C94">
+  <option value="TDO8H10">
+  <option value="TDO8H17">
+  <option value="RIV4D64">
+  <option value="TDO8H50">
+  <option value="TDO8H36">
+  <option value="TDO8H37">
+  <option value="TDO8H45">
+  <option value="TDO8H42">
+  <option value="SYU4C79">
+  <option value="TDO8H40">
+  <option value="SYU4D15">
+  <option value="TDO8H38">
+  <option value="TDO8H44">
+  <option value="TDO8H39">
+  <option value="TDO8H46">
+  <option value="SYU4C89">
+  <option value="TDO8H35">
+  <option value="SYU4C80">
+  <option value="TDO8H47">
+  <option value="SYU4C81">
+  <option value="SYU4D02">
+  <option value="TDO8H15">
+  <option value="SYU4C78">
+  </datalist>
 
-    <label>Origem:</label>
+  <label>Origem:</label>
     <select id="origem">
       <option value="">Selecione a origem</option>
       <option>São José dos Campos</option>
@@ -45,8 +64,24 @@
       <option>Campos do Jordão</option>
     </select>
 
+    <label>Motivo:</label>
+    <select id="motivo" onchange="carregarDiagnosticos()">
+    <option value="">Selecione um motivo</option>
+    <option value="Parada Não Programada">Parada Não Programada</option>
+    <option value="Tempo Excedido no Destino">Tempo Excedido no Destino</option>
+    <option value="Tempo Excedido na Origem">Tempo Excedido na Origem</option>
+    <option value="Manutenção Corretiva">Manutenção Corretiva</option>
+    <option value="Manutenção Preventiva">Manutenção Preventiva</option>
+    <option value="Parada Programada">Parada Programada</option>
+    <option value="DSR">DSR</option>
+    <option value="Refeição">Refeição</option>
+    </select>
+
     <label>Diagnóstico:</label>
-    <textarea id="diagnostico"></textarea>
+    <select id="diagnostico"></select>
+
+    <label>Obs:</label>
+    <textarea id="obs" placeholder="Observações (opcional)"></textarea>
 
     <h3>Acionamentos:</h3>
     <div id="acionamentos"></div>
@@ -57,8 +92,13 @@
     <h3>Árvore Gerada:</h3>
     <div id="output"></div>
     <button id="copiarTexto">Copiar Texto</button>
+    <button id="enviarWhatsApp">Enviar no WhatsApp</button>
+    <button id="enviarEmail" style="display: none;">Enviar por E-mail</button>
+
   </div>
 
   <script src="./js/script.js"></script>
+
+  
 </body>
 </html>

@@ -6,6 +6,7 @@ document.getElementById('copiarTexto').addEventListener('click', copiarTexto);
 
 function addAcionamento() {
   acionamentoCount++;
+  console.log('Total acionamentos:', acionamentoCount);
   const div = document.createElement('div');
   div.classList.add('acionamento');
   div.id = `acionamento-${acionamentoCount}`;
@@ -27,7 +28,7 @@ function addAcionamento() {
     Retorno do Nível:
     <select id="retorno-opcao-${acionamentoCount}" onchange="mostrarRetornoCampos(${acionamentoCount})">
       <option value="">Selecione</option>
-      <option value="Previsao">Previsão</option>
+      <option value="Previsao">Precisão</option>
       <option value="SemPrevisao">Sem previsão</option>
       <option value="AguardandoRetorno">Aguardando retorno</option>
     </select>
@@ -60,14 +61,143 @@ function mostrarRetornoCampos(index) {
   }
 }
 
+function carregarDiagnosticos() {
+  const motivo = document.getElementById('motivo').value;
+  const diagnosticoSelect = document.getElementById('diagnostico');
+  
+  diagnosticoSelect.innerHTML = ''; 
+
+  let opcoes = [];
+
+  switch (motivo) {
+    case 'Parada Não Programada':
+      opcoes = [
+        'AGUARDANDO DESLOCAMENTO PARA MANUTENÇÃO',
+        'AGUARDANDO MANIFESTO - CTE',
+        'AGAURDANDO MOTORISTA',
+        'AGAURDANDO SOCORRO',
+        'BORRACHARIA',
+        'CARGA TOMBADA',
+        'ENTREGA AGENDADA - AGUARDANDO HORARIO DE JANELA',
+        'FADIGA/CANSAÇO',
+        'FATORES FISIOLÓGICOS',
+        'FERIADO',
+        'PERNOITE',
+        'POSTO FISCAL',
+        'RESTRIÇÃO LOCAL',
+        'RETRABALHO DE PALETES',
+        'SEM JUSTIFICATIVA DA TRANSPORTADORA',
+        'TRAJETO INTERDITADO',
+        'TROCA DE NOTA FISCAL - OPERAÇÃO TRIÂNGULAR',
+        'UNIDADE FECHADA',
+        'TROCA DE TURNO'
+      ];
+      break;
+
+    case 'Tempo Excedido no Destino':
+      opcoes = [
+        'AGUARDANDO CONTROLE DE RECEBIMENTO',
+        'AGUARDANDO NOTA FISCAL',
+        'AGUARDANDO PESAGEM',
+        'ATRASO NO DESLOCAMENTO DO VEICULO ATÉ A DOCA - DESCARGA',
+        'AVARIA NO PRODUTO',
+        'CAPACIDADE DA OPERAÇÃO REDUZIDA NA DESCARGA',
+        'CARGA INCOMPLETA - FALTA DE MERCADORIA',
+        'CHEGADA ANTECIPADA',
+        'CHEGADA EM COMBOIO',
+        'CONDIÇÕES CLIMÁTICAS',
+        'DEVOLUÇÃO DE CARGA - REPROVADA PELA QUALIDADE',
+        'DOCA OCUPADA - AGUARDANDO DISPONIBILIDADE',
+        'FALTA DE ESPAÇO FISÍCO',
+        'MOTORISTA NÃO SE APRESENTOU PARA O DESCARREGAMENTO',
+        'PERDA DE AGENDAMENTO - ATRASO NO CARREGAMENTO INICIAL',
+        'PERDA DE AGENDAMENTO - ATRASO NO TRAJETO',
+        'PRIORIZAÇÃO DE VEÍCULOS TERCEIROS',
+        'RETRABALHO DE PALLETS',
+        'SEM JUSTIFICATIVA NO DESTINO',
+        'VEICULO BLOQUEADO'
+      ];
+      break;
+
+    case 'Tempo Excedido na Origem':
+      opcoes = [
+        'ACIDENTE COM VEÍCULO DENTRO DA UNIDADE',
+        'AGUARDANDO MANIFESTO - CTE',
+        'AGUARDANDO NOTA FISCAL',
+        'AGUARDANDO PESAGEM',
+        'AGUARDANDO SEPARAÇÃO DO PRODUTO',
+        'ATRASO NO DESLOCAMENTO DO VEÍCULO ATÉ A DOCA - CARREGAMENTO',
+        'CAPACIDADE DA OPERAÇÃO REDUZIDA NO CARREGAMENTO',
+        'CHEGADA ANTECIPADA',
+        'CHEGADA EM COMBOIO',
+        'CLIENTE SEM AGENCAMENTO PARA DESCARGA',
+        'CONDIÇÕES CLIMÁTICAS',
+        'DESCARREGAMENTO DE PALETE',
+        'DIVERGÊNCIA DE PESO NA BALANÇA',
+        'DOCA OCUPADA - AGUARDANDO DISPONIBILIDADE',
+        'FALTA DE CATRAÇA',
+        'FALTA DE ESPAÇO FISICO',
+        'FALTA DE PRODUTO',
+        'MOTORISTA NÃO SE APRESENTOU PARA O CARREGAMENTO',
+        'PRIORIZAÇÃO DE VEÍCULOS TERCEIROS',
+        'PRODUTO ESPECIAL',
+        'PRODUTO SENDO AVALIADO PELO TIME DE QUALIDADE',
+        'RETRABALHO DE PALETES',
+        'SEFAZ - LENTIDÃO NO SISTEMA',
+        'SEM JUSTIFICATIVA NA ORIGEM',
+        'SISTEMA INOPERANTE',
+        'UNIDADE EM INVENTÁRIO',
+        'VEÍCULO AGUARDANDO AMARRAÇÃO',
+        'VEÍCULO SEM PROGRAMAÇÃO NA UNIDADE'
+      ];
+      break;
+
+    case 'Manutenção Corretiva':
+      opcoes = ['MANUTENÇÃO CORRETIVA'];
+      break;
+
+    case 'Manutenção Preventiva':
+      opcoes = ['MANUTENÇÃO PREVENTIVA'];
+      break;
+
+    case 'Refeição':
+      diagnosticoSelect.outerHTML = '<input id="diagnostico" placeholder="Digite a descrição da Refeição">';
+      return;
+
+    case 'DSR':
+      opcoes = ['MOTORISTA EM DESCANSO REMUNERADO'];
+      break;
+
+    case 'Parada Programada':
+      opcoes = [
+        'OCIOSO- FROTA BACKUP',
+        'PERNOITE',
+        'VEICULO DESATIVADO - FORA DE OPERAÇÃO',
+        'VEICULO PARADO PARA ABASTECIMENTO'
+      ];
+      break;
+
+    default:
+      opcoes = [];
+  }
+
+  opcoes.forEach(opcao => {
+    const option = document.createElement('option');
+    option.textContent = opcao;
+    diagnosticoSelect.appendChild(option);
+  });
+}
+
 function gerarArvore() {
   const placa = document.getElementById('placa').value;
   const motivo = document.getElementById('motivo').value;
   const origem = document.getElementById('origem').value;
   const destino = document.getElementById('destino').value;
-  const diagnostico = document.getElementById('diagnostico').value;
+  const diagnosticoInput = document.getElementById('diagnostico');
+  const diagnostico = diagnosticoInput.tagName === 'INPUT' ? diagnosticoInput.value : diagnosticoInput.value;
+  const obs = document.getElementById('obs').value;
 
-  let output = `PLACA: ${placa}\nMOTIVO: ${motivo}\nORIGEM: ${origem}\nDESTINO: ${destino}\nDIAGNÓSTICO: ${diagnostico}\n\n`;
+  let output = `PLACA: ${placa}\nORIGEM: ${origem}\nDESTINO: ${destino}\nMOTIVO: ${motivo}\nDIAGNÓSTICO: ${diagnostico}\nOBS: ${obs}\n\n`;
 
   for (let i = 1; i <= acionamentoCount; i++) {
     const nivel = document.getElementById(`nivel-${i}`).value;
@@ -89,11 +219,17 @@ function gerarArvore() {
       retornoTexto = 'Aguardando retorno';
     }
 
-    output += `${nivel}°ACIONAMENTO: ${data} ${hora}\nRESPONSÁVEL: ${responsavel}\nRETORNO NÍVEL ${nivel}: ${retornoTexto}\n\n`;
+    output += `${nivel}° ACIONAMENTO:\nDATA E HORA: ${data} ${hora}\nRESPONSÁVEL: ${responsavel}\nRETORNO DO NÍVEL ${nivel}: ${retornoTexto}\n\n`;
   }
-
   document.getElementById('output').innerText = output.toUpperCase();
+  
+  if (acionamentoCount >= 3) {
+  document.getElementById('enviarEmail').style.display = 'inline-block';
+  } else {
+  document.getElementById('enviarEmail').style.display = 'none';
+  }
 }
+
 
 function copiarTexto() {
   const texto = document.getElementById('output').innerText;
@@ -106,4 +242,27 @@ function formatarData(dataIso) {
   if (!dataIso) return '';
   const [ano, mes, dia] = dataIso.split('-');
   return `${dia}/${mes}/${ano}`;
+}
+
+document.getElementById('enviarWhatsApp').addEventListener('click', enviarWhatsApp);
+
+function enviarWhatsApp() {
+  const texto = document.getElementById('output').innerText.trim();
+  const textoEncoded = encodeURIComponent(texto);
+
+  const link = `https://wa.me/?text=${textoEncoded}`;
+
+  window.open(link, '_blank');
+}
+
+document.getElementById('enviarEmail').addEventListener('click', enviarEmail);
+
+function enviarEmail() {
+  const texto = document.getElementById('output').innerText.trim();
+  const assunto = encodeURIComponent('Árvore de Escalonamento');
+  const corpo = encodeURIComponent(texto);
+
+  const mailtoLink = `mailto:DESTINATARIO@EXEMPLO.COM?subject=${assunto}&body=${corpo}`;
+
+  window.open(mailtoLink, '_blank');
 }
